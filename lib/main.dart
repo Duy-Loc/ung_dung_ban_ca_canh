@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ung_dung_ban_ca_canh/screen/home.dart';
+import 'package:ung_dung_ban_ca_canh/screen/home_screen.dart';
+import 'package:ung_dung_ban_ca_canh/screen/login_screen.dart';
 
-void main() => runApp(GetMaterialApp(home: Home()));
+void main() => runApp(
+
+    GetMaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: HomeScreen()));

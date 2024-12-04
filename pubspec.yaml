@@ -33,6 +33,7 @@ dependencies:
 
   get: ^4.6.6
   http: ^1.2.2
+  intl: ^0.18.0
 
 
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ung_dung_ban_ca_canh/controller/register_controller.dart';
 
 class RegisterScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -6,6 +8,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RegisterController controller = Get.put(RegisterController());
     return Scaffold(
       appBar: AppBar(title: Text('Register')),
       body: Padding(
@@ -15,7 +18,7 @@ class RegisterScreen extends StatelessWidget {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextField(
               controller: passwordController,
@@ -32,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+               Get.back();
               },
               child: Text('Already have an account? Login'),
             ),
