@@ -59,12 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: const Text('Login'),
               ) ;
             }) ,
-            // TextButton(
-            //   onPressed: () {
-            //     Get.to(() => RegisterScreen());
-            //   },
-            //   child: Text('Don\'t have an account? Register'),
-            // ),
+            TextButton(
+              onPressed: () {
+                Get.to(() => RegisterScreen());
+              },
+              child: Text('Don\'t have an account? Register'),
+            ),
           ],
         ),
       ),

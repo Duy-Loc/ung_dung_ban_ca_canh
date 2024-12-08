@@ -7,4 +7,4 @@ void main() => runApp(
 
     GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: HomeScreen()));
+    home: LoginScreen()));

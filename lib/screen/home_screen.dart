@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
               // ),
               ListTile(
                 leading: Icon(Icons.login_rounded), // Biểu tượng đăng nhập
-                title: Text('Đăng nhập'),
+                title: Text('Đăng xuất'),
                 onTap: () {
                   Navigator.pop(context);
                   // Thêm hành động khi nhấn vào, ví dụ điều hướng đến màn hình đăng nhập
