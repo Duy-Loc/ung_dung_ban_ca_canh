@@ -7,10 +7,15 @@ import 'login_controller.dart';
 class SystemController extends GetxController {
   final isShowLogout = false.obs ;  
 
-  HomeController homeController = Get.put(HomeController());
-  LoginController loginController = Get.put(LoginController());
-  RegisterController registerController = Get.put(RegisterController());
+ late HomeController homeController ;
+  late LoginController loginController ;
+  late RegisterController registerController ;
 
+  initControllerApp() {
+      homeController = Get.put(HomeController());
+   loginController = Get.put(LoginController());
+   registerController = Get.put(RegisterController());
+  }
 
   
  }

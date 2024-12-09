@@ -7,7 +7,7 @@ class LoginController extends GetxController{
   RxString password = "".obs ;
   RxBool isLoading  = false.obs ;
   RxBool isLoginSuccess =  false.obs ;
-
+  
   onRefresh() {
     username.value =  "" ;
     password.value = "" ;
@@ -17,11 +17,12 @@ class LoginController extends GetxController{
 
   handleLoginProcees(String username , String password) async {
     isLoading.value = true ;
-     await Future.delayed(Duration(seconds: 1));
-     isLoading.value = false ;
      if(username == "MihHiu" && password == "MihHiu")
        {
          isLoginSuccess.value = true ;
+         isLoading.value = false ;
+       }else {
+         isLoading.value = false ;
        }
   }
 

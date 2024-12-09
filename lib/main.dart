@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:ung_dung_ban_ca_canh/screen/login/login_screen.dart';
-
+import 'package:ung_dung_ban_ca_canh/controller/system_controler.dart';
 import 'utils/routes/app_routes.dart';
 import 'utils/routes/routes.dart';
 
-void main() => runApp(
-
-    GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: LoginScreen()));
-
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    SystemController controller = Get.put(SystemController());
+    controller.initControllerApp() ;  
       return GetMaterialApp(
          debugShowCheckedModeBanner: false,
           initialRoute:Routes.root,

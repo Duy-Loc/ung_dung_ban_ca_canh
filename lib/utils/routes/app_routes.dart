@@ -1,5 +1,7 @@
 
 import 'package:get/get.dart';
+import 'package:ung_dung_ban_ca_canh/screen/login/login_screen.dart';
+import 'package:ung_dung_ban_ca_canh/screen/register/register_sreen.dart';
 
 import '../../screen/home/home_screen.dart';
 import 'routes.dart';
@@ -10,15 +12,20 @@ abstract class AppPages {
       name: Routes.root,
       showCupertinoParallax: false,
       transition: Transition.fadeIn,
-      page: () =>  HomeScreen(),
-      
+      page: () =>  LoginScreen(),
     ),
-    // GetPage(
-    //   name: Routes.editTabs,
-    //   showCupertinoParallax: false,
-    //   transition: Transition.fadeIn,
-    //   page: () => const EditTabsScreen(),
-    // ),
+    GetPage(
+      name: Routes.home,
+      showCupertinoParallax: false,
+      transition: Transition.fadeIn,
+      page: () => HomeScreen(),
+    ),
+     GetPage(
+      name: Routes.register,
+      showCupertinoParallax: false,
+      transition: Transition.fadeIn,
+      page: () => RegisterScreen(),
+    ),
     // GetPage(
     //   name: Routes.focusProduct,
     //   showCupertinoParallax: false,

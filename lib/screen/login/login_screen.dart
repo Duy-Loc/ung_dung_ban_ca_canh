@@ -4,6 +4,8 @@ import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
 import 'package:ung_dung_ban_ca_canh/screen/home/home_screen.dart';
 import 'package:ung_dung_ban_ca_canh/screen/register/register_sreen.dart';
 
+import '../../utils/routes/routes.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -13,20 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
-  late LoginController controller ;
-  @override
-  void initState() {
-  
-    super.initState();
-   controller  = Get.put(LoginController());
-  }
+  final controller  = Get.find<LoginController>(); 
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-      appBar: AppBar(title:  Text('Login')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -34,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextField(
               controller: passwordController,
@@ -43,14 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
            const SizedBox(height: 20),
             Obx(() {
-              if(controller.isLoading.value == true )
+              if(controller.isLoading.value )
                 {
                   return CircularProgressIndicator();
                 }
               if(controller.isLoginSuccess.value == true)
                 {
-                  // Get.snackbar("Login succes", "Ban tum lum ") ;
-                  Get.to(() => HomeScreen());
+                  Get.toNamed(Routes.home) ;
                 }
               return ElevatedButton(
                 onPressed: () {
@@ -61,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }) ,
             TextButton(
               onPressed: () {
-                Get.to(() => RegisterScreen());
+                Get.toNamed(Routes.register) ;
               },
               child: Text('Don\'t have an account? Register'),
             ),
