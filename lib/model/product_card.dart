@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'detail_product_screen.dart';
-import 'format_money.dart';
+import '../screen/detail_product/detail_product_screen.dart';
+import '../utils/core/format_money.dart';
 
 class ProductCard extends StatelessWidget {
   final String name;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
-import 'package:ung_dung_ban_ca_canh/screen/home_screen.dart';
-import 'package:ung_dung_ban_ca_canh/screen/register_sreen.dart';
+import 'package:ung_dung_ban_ca_canh/screen/home/home_screen.dart';
+import 'package:ung_dung_ban_ca_canh/screen/register/register_sreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late LoginController controller ;
   @override
   void initState() {
-    // TODO: implement initState
+  
     super.initState();
    controller  = Get.put(LoginController());
   }
@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               if(controller.isLoginSuccess.value == true)
                 {
-                  Get.snackbar("Login succes", "Ban tum lum ") ;
+                  // Get.snackbar("Login succes", "Ban tum lum ") ;
                   Get.to(() => HomeScreen());
                 }
               return ElevatedButton(

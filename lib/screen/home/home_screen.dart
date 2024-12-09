@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/home_controller.dart';
 import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
-import 'package:ung_dung_ban_ca_canh/screen/filter_dialog.dart';
+import 'package:ung_dung_ban_ca_canh/screen/home/filter_dialog.dart';
 
-import 'product_card.dart';
+import '../../model/product_card.dart';
 import 'search_textfield_widget.dart';
 
 class HomeScreen extends StatelessWidget {

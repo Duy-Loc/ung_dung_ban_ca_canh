@@ -32,8 +32,9 @@ dependencies:
     sdk: flutter
 
   get: ^4.6.6
-  http: ^1.2.2
   intl: ^0.18.0
+  dio: ^5.7.0
+  flutter_smart_dialog: ^4.9.8+5
 
 
 
