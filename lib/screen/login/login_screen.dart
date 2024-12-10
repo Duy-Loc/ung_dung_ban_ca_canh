@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
-import 'package:ung_dung_ban_ca_canh/screen/home/home_screen.dart';
-import 'package:ung_dung_ban_ca_canh/screen/register/register_sreen.dart';
 
 import '../../utils/routes/routes.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends GetView<LoginController> {
+   LoginScreen({super.key});
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
-  final controller  = Get.find<LoginController>(); 
+
+  // final controller  = Get.find<LoginController>(); 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Login')),
+        title: const Text('Dang nhap')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -30,39 +25,44 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'tai khoan'),
             ),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'mat khau'),
               obscureText: true,
             ),
            const SizedBox(height: 20),
-            Obx(() {
-              if(controller.isLoading.value )
+           GetBuilder<LoginController>(builder:(controller) {
+            
+            if(controller.isLoading.value)
                 {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
-              if(controller.isLoginSuccess.value == true)
-                {
-                  Get.toNamed(Routes.home) ;
-                }
+            if(controller.isLoading.value == false  && controller.isLoginSuccess.value == true)
+              {  
+               Get.toNamed(Routes.home) ;  
+              }
               return ElevatedButton(
                 onPressed: () {
-                  controller.handleLoginProcees(emailController.text.toString(), passwordController.text.toString()) ;
+                  removeFocus(context);
+                   controller.handleLoginProcees(emailController.text.toString(), passwordController.text.toString()) ;
                 },
-                child: const Text('Login'),
+                child: const Text('Dang nhap'),
               ) ;
-            }) ,
-            TextButton(
-              onPressed: () {
-                Get.toNamed(Routes.register) ;
-              },
-              child: Text('Don\'t have an account? Register'),
-            ),
+           },  ) ,  
+           
+           
           ],
         ),
       ),
     );
+  }
+}
+
+removeFocus(BuildContext context) {
+  final FocusScopeNode currentScope = FocusScope.of(context);
+  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+    FocusManager.instance.primaryFocus!.unfocus();
   }
 }
