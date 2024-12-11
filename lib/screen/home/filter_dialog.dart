@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FilterDialog extends StatefulWidget {
   @override
@@ -51,7 +52,8 @@ class _FilterDialogState extends State<FilterDialog> {
         TextButton(
           child: Text('Hủy'),
           onPressed: () {
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+            Get.back();
           },
         ),
         TextButton(
@@ -63,7 +65,8 @@ class _FilterDialogState extends State<FilterDialog> {
                 .map((entry) => entry.key)
                 .toList();
             print('Danh mục đã chọn: $selected'); // Hoặc thực hiện hành động khác
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+             Get.back();
           },
         ),
       ],

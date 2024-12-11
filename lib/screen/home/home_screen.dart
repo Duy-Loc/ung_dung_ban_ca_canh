@@ -5,6 +5,7 @@ import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
 import 'package:ung_dung_ban_ca_canh/screen/home/filter_dialog.dart';
 
 import '../../model/product_card.dart';
+import '../../utils/routes/routes.dart';
 import 'search_textfield_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                 leading: Icon(Icons.login_rounded), // Biểu tượng đăng nhập
                 title: Text('Đăng xuất'),
                 onTap: () {
-                  Navigator.pop(context);
+                    Get.toNamed(Routes.root);  
                   // Thêm hành động khi nhấn vào, ví dụ điều hướng đến màn hình đăng nhập
                 },
               ),
