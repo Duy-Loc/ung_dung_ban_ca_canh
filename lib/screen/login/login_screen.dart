@@ -23,11 +23,11 @@ class LoginScreen extends GetView<LoginController> {
           children: [
             TextField(
               controller: emailController,
-              decoration: const InputDecoration(labelText: 'tai khoan'),
+              decoration: const InputDecoration(labelText: 'Tai khoan'),
             ),
             TextField(
               controller: passwordController,
-              decoration: const InputDecoration(labelText: 'mat khau'),
+              decoration: const InputDecoration(labelText: 'Mat khau'),
               obscureText: true,
             ),
             const SizedBox(height: 20),
@@ -44,6 +44,13 @@ class LoginScreen extends GetView<LoginController> {
                 child: const Text('Dang nhap'),
               );
             }),
+            const SizedBox(height: 5),
+            TextButton(
+              onPressed: () {
+                Get.toNamed(Routes.register);
+              },
+              child: const Text('Dang ky tai khoan moi'),
+            ),
           ],
         ),
       ),

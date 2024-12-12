@@ -1,20 +1,32 @@
 
-import 'dart:io';
-
 import 'package:get/get.dart';
-import 'package:ung_dung_ban_ca_canh/utils/core/app_service.dart';
+import '../utils/core/app_service.dart';
 
 class RegisterController extends GetxController {
   RxString username =  "".obs ;
   RxString password = "".obs ;
+  RxString email = "".obs ; 
   RxBool isLoading  = false.obs ;
+  RxBool isPostedRegister = false.obs ;
   FetchClient apiService = FetchClient();
 
-  handleLoginProcees({required String username,required String password ,required String email}) async {
+  Future<void> handleLoginProcees() async {
     isLoading.value = true;
-    final response = await apiService.postData(path: '/account/register',
-        params: {'username': username, 'password': password ,  'email' : email});
-      
-    isLoading.value = false ;  
+    final response = await apiService.postData( path: '/account/register',
+        params: {'username': username.value, 'password': password.value,'email' : email.value});
+      if (response.statusCode! >= 200 && response.statusCode! <= 299) {
+      FetchClient.token = response.data['token'];
+       Get.showSnackbar(const GetSnackBar(
+        duration: Duration(seconds: 2),
+        message: "Đăng ký thành công",
+      ));
+      isPostedRegister.value = true;
+    } else {
+      Get.showSnackbar(const GetSnackBar(
+        duration: Duration(seconds: 2),
+        message: "Hãy thử đăng ký lại với 1 cách khác",
+      ));
+      isPostedRegister.value = false;
+    }
   }
 }

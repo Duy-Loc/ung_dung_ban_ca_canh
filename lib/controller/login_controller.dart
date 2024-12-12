@@ -13,6 +13,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    onRefresh(); 
     // Lắng nghe sự thay đổi của isLoggedIn
     ever(isLoginSuccess, (loggedIn) {
       if (loggedIn == true) {
@@ -38,6 +39,10 @@ class LoginController extends GetxController {
       FetchClient.token = response.data['token'];
       print(FetchClient.token);
       isLoginSuccess.value = true;
+       Get.showSnackbar(const GetSnackBar(
+        duration: Duration(seconds: 2),
+        message: "Đăng nhập thành công",
+      ));
     } else {
       Get.showSnackbar(const GetSnackBar(
         duration: Duration(seconds: 2),

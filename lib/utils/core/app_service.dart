@@ -2,12 +2,16 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
 class FetchClient {
   String get domain {
     return "http://54.255.204.181:5212/api";
+  }
+   String get domainNotApi {
+    return "http://54.255.204.181:5212";
   }
 
   static String token = '';
@@ -17,7 +21,7 @@ class FetchClient {
   List<String> curlList = [];
 
   logRequest() {
-    // dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
+    dio.interceptors.add(CurlLoggerDioInterceptor(printOnSuccess: true));
 
     // if (AppConstants.mod == "develop") {
     //   dio.interceptors.add(InterceptorsWrapper(
@@ -110,12 +114,14 @@ class FetchClient {
     var option = Options(
         headers: {
           // 'x-application-name': 'PMS-APP', // config sau khi  sử dụng
-          'Authorization': token.isEmpty ? '' : ('Bearer $token')
+          'Authorization': token.isEmpty ? '' : ('Bearer $token') ,
+          'Content-Type': 'application/json', 
+          'Accept': 'application/json'
         },
-        followRedirects: false,
-        validateStatus: (status) {
-          return true;
-        },
+        // followRedirects: false,
+        // validateStatus: (status) {
+        //   return true;
+        // },
         sendTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60));
     return option;

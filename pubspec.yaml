@@ -35,6 +35,7 @@ dependencies:
   intl: ^0.18.0
   dio: ^5.7.0
   flutter_smart_dialog: ^4.9.8+5
+  curl_logger_dio_interceptor: ^1.0.0
 
 
 
