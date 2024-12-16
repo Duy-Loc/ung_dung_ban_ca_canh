@@ -133,7 +133,7 @@ class FetchClient {
       Options? optionsAlternative,
       Map<String, dynamic>? queryParameters}) async {
     try {
-      logRequest();
+      // logRequest();
       Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
           queryParameters: queryParameters,
           options: optionsAlternative ?? options());

@@ -1,7 +1,7 @@
 class FishModel {
   int? id;
   String? productName;
-  int? price;
+  double? price;
   String? description;
   int? stockQuantity;
   bool? isVisible;

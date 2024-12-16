@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/home_controller.dart';
-import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
 import 'package:ung_dung_ban_ca_canh/screen/home/filter_dialog.dart';
 
 import '../../model/product_card.dart';
@@ -9,10 +8,34 @@ import '../../utils/routes/routes.dart';
 import 'drawer_information_user.dart';
 import 'search_textfield_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  final HomeController c = Get.put(HomeController());
-  // final LoginController lC =  Get.find<LoginController>() ;
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeController controller = Get.put(HomeController());
+  @override
+  void initState() {
+    super.initState();
+    controller.handleFetchFishes(page: page, pageSize: pageSize);
+    _scrollController.addListener(_onScroll);
+  }
+  bool _isLoading = false;
+  ScrollController _scrollController = ScrollController(); 
+  _onScroll(){ 
+     if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent &&
+        !_isLoading) {
+      controller.handleFetchFishes(page: ++page, pageSize: pageSize);
+    }
+  }
+
+  int page = 1;
+  int pageSize = 10;
+  // final LoginController lC =  Get.find<LoginController>() ;
   final List<Map<String, dynamic>> products = List.generate(
     100,
     (index) => {
@@ -80,33 +103,47 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SearchTextField(
-                    onSearch: (query) {
-                      print('Tìm kiếm: $query');
-                      // Thêm logic xử lý tìm kiếm ở đây
-                    },
-                  )),
-              GridView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(8.0),
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8.0,
-                  mainAxisExtent: 280,
-                  mainAxisSpacing: 8.0,
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return const  ProductCard();
-                },
-              ),
-            ],
+        body: RefreshIndicator(
+          onRefresh: () async {
+            page = 1  ; 
+            controller.handleFetchFishes(page: page, pageSize: pageSize);
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SearchTextField(
+                      onSearch: (query) {
+                        print('Tìm kiếm: $query');
+                        
+                      },
+                    )),
+                Obx(
+                  () => controller.isloadingFish.value
+                      ? const RefreshProgressIndicator()
+                      : GridView.builder(
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(8.0),
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisExtent: 280,
+                            mainAxisSpacing: 8.0,
+                          ),
+                          itemCount: controller.fishesAnc.length,
+                          itemBuilder: (context, index) {
+                            return ProductCard(
+                              model: controller.fishesAnc[index],
+                            );
+                          },
+                        ),
+                )
+              ],
+            ),
           ),
         ),
       ),

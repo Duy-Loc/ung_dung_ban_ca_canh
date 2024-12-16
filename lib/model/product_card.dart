@@ -14,7 +14,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 String urlImage = 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg' ; 
-    if(model?.productImages?.isEmpty ?? false){
+    if(model?.productImages?.isNotEmpty ?? false){
       urlImage = model!.productImages!.isEmpty ? 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg' : FetchClient().domainNotApi + model!.productImages![0].imageUrl!;  
     }
     return GestureDetector(
