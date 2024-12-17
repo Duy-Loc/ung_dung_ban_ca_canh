@@ -11,9 +11,7 @@ class FilterDialog extends StatefulWidget {
 
 class _FilterDialogState extends State<FilterDialog> {
   // Danh sách các loại cá
-   List<CategoryModel> catogiresPicked = [
-    
-  ];
+  List<CategoryModel> catogiresPicked = [];
 
   final homeController = Get.find<HomeController>();
 
@@ -23,7 +21,7 @@ class _FilterDialogState extends State<FilterDialog> {
   void initState() {
     super.initState();
     // Khởi tạo tất cả giá trị là false
-    catogiresPicked =  homeController.categoriesAnc  ;
+    catogiresPicked = homeController.categoriesAnc;
     // for (var category in categories) {
     //   selectedCategories[category] = false;
     // }
@@ -39,10 +37,10 @@ class _FilterDialogState extends State<FilterDialog> {
           children: catogiresPicked.map((category) {
             return CheckboxListTile(
               title: Text(category.categoryName!),
-              value: category.isPicked ?? false ,
+              value: category.isPicked ?? false,
               onChanged: (bool? value) {
                 setState(() {
-                  category.isPicked  = value ?? false;
+                  category.isPicked = value ?? false;
                 });
               },
             );
@@ -51,7 +49,7 @@ class _FilterDialogState extends State<FilterDialog> {
       ),
       actions: [
         TextButton(
-          child: Text('Hủy'),
+          child: const Text('Hủy'),
           onPressed: () {
             // Navigator.of(context).pop();
             Get.back();
@@ -60,13 +58,16 @@ class _FilterDialogState extends State<FilterDialog> {
         TextButton(
           child: const Text('Xác nhận'),
           onPressed: () {
-            // Xử lý các danh mục đã chọn
-            // List<String> selected = catogiresPicked
-            //     .where((entry) => entry.isPicked)
-            //     .map((entry) => entry.key)
-            //     .toList();
-            // Navigator.of(context).pop();
-             Get.back();
+            Get.back();
+            List<int> categoriesId = catogiresPicked
+                .where((element) => element.isPicked == true)
+                .map((e) => e.id!)
+                .toList();
+            if (categoriesId.isEmpty) {
+              homeController.handleFetchFishes(page: 1, pageSize: 10);
+            } else {
+              homeController.handleFilterFishesCategory(categoriesId);
+            }
           },
         ),
       ],

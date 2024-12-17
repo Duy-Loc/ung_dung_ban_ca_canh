@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget{
     controller.initControllerApp() ;  
       return GetMaterialApp(
          debugShowCheckedModeBanner: false,
-          initialRoute:Routes.root,
+          initialRoute:Routes.home,
           getPages: AppPages.pages,
           title: 'Ban Ca Canh',
            theme: ThemeData(

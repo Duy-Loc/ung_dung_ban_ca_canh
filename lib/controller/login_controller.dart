@@ -4,8 +4,10 @@ import '../utils/core/app_service.dart';
 import '../utils/routes/routes.dart';
 
 class LoginController extends GetxController {
-  RxString username = "".obs;
+  RxString usernameAbc = "".obs;
   RxString password = "".obs;
+  RxString emailUser = "".obs;
+  RxBool isAdmin = false.obs;
   RxBool isLoading = false.obs;
   RxBool isLoginSuccess = false.obs;
   FetchClient apiService = FetchClient();
@@ -13,7 +15,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    onRefresh(); 
+    onRefresh();
     // Lắng nghe sự thay đổi của isLoggedIn
     ever(isLoginSuccess, (loggedIn) {
       if (loggedIn == true) {
@@ -23,7 +25,7 @@ class LoginController extends GetxController {
   }
 
   onRefresh() {
-    username.value = "";
+    usernameAbc.value = "";
     password.value = "";
     isLoading.value = false;
     isLoginSuccess.value = false;
@@ -39,10 +41,18 @@ class LoginController extends GetxController {
       FetchClient.token = response.data['token'];
       print(FetchClient.token);
       isLoginSuccess.value = true;
-       Get.showSnackbar(const GetSnackBar(
+      usernameAbc.value = username;
+      emailUser.value = response.data['email'];
+      if (username == 'adminCaCanh') {
+        isAdmin.value = true;
+      }else{
+        isAdmin.value = false; 
+      }
+      Get.showSnackbar(const GetSnackBar(
         duration: Duration(seconds: 2),
         message: "Đăng nhập thành công",
       ));
+      Get.toNamed(Routes.home);
     } else {
       Get.showSnackbar(const GetSnackBar(
         duration: Duration(seconds: 2),

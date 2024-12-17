@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/home_controller.dart';
+import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
 import 'package:ung_dung_ban_ca_canh/screen/home/filter_dialog.dart';
 
 import '../../model/product_card.dart';
+import '../../model/product_card_2 .dart';
 import '../../utils/routes/routes.dart';
 import 'drawer_information_user.dart';
 import 'search_textfield_widget.dart';
@@ -17,16 +19,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final HomeController controller = Get.put(HomeController());
+  final LoginController loginController = Get.find<LoginController>();
   @override
   void initState() {
     super.initState();
     controller.handleFetchFishes(page: page, pageSize: pageSize);
     _scrollController.addListener(_onScroll);
   }
+
   bool _isLoading = false;
-  ScrollController _scrollController = ScrollController(); 
-  _onScroll(){ 
-     if (_scrollController.position.pixels >=
+  ScrollController _scrollController = ScrollController();
+  _onScroll() {
+    if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent &&
         !_isLoading) {
       controller.handleFetchFishes(page: ++page, pageSize: pageSize);
@@ -46,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'reviews': (index + 5) % 10 + 1,
     },
   );
-
+// ProductCard2
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -78,26 +82,93 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerInformationUser(),
-              ListTile(
-                leading: const Icon(Icons.shopping_cart),
-                title: const Text('Chi tiết giỏ hàng'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Đăng xuất'),
-                onTap: () {
-                  Get.offNamed(Routes.root);
-                },
-              ),
+              loginController.isLoginSuccess.value &&
+                      !loginController.isAdmin.value
+                  ? ListTile(
+                      leading: const Icon(Icons.shopping_basket),
+                      title: const Text('Chi tiết giỏ hàng'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isLoginSuccess.value &&
+                      !loginController.isAdmin.value
+                  ? ListTile(
+                      leading: const Icon(Icons.receipt_long),
+                      title: const Text('Trạng thái đơn hàng'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isAdmin.value == true
+                  ? ListTile(
+                      leading: const Icon(Icons.bar_chart),
+                      title: const Text('Thống kê doanh thu'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isAdmin.value == true
+                  ? ListTile(
+                      leading: const Icon(Icons.add_box),
+                      title: const Text('Thêm sản phẩm'),
+                      onTap: () {
+                        Get.toNamed(Routes.addFish);
+                        // Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isAdmin.value == true
+                  ? ListTile(
+                      leading: const Icon(Icons.shopping_cart),
+                      title: const Text('Đơn đặt hàng'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isAdmin.value == true
+                  ? ListTile(
+                      leading: const Icon(Icons.check_circle),
+                      title: const Text('Đơn giao thành công'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isAdmin.value == true
+                  ? ListTile(
+                      leading: const Icon(Icons.edit),
+                      title: const Text('Điều chỉnh danh mục'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : const SizedBox(),
+              loginController.isLoginSuccess.value
+                  ? ListTile(
+                      leading: const Icon(Icons.logout),
+                      title: const Text('Đăng xuất'),
+                      onTap: () {
+                        Get.offNamed(Routes.root);
+                      },
+                    )
+                  : ListTile(
+                      leading: const Icon(Icons.login),
+                      title: const Text('Đăng nhập'),
+                      onTap: () {
+                        Get.offNamed(Routes.root);
+                      },
+                    ),
             ],
           ),
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            page = 1  ; 
+            page = 1;
             controller.handleFetchFishes(page: page, pageSize: pageSize);
           },
           child: SingleChildScrollView(
@@ -109,31 +180,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SearchTextField(
                       onSearch: (query) {
                         print('Tìm kiếm: $query');
-                        
                       },
                     )),
-                Obx(
-                  () => controller.isloadingFish.value
-                      ? const RefreshProgressIndicator()
-                      : GridView.builder(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(8.0),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 8.0,
-                            mainAxisExtent: 280,
-                            mainAxisSpacing: 8.0,
-                          ),
-                          itemCount: controller.fishesAnc.length,
-                          itemBuilder: (context, index) {
-                            return ProductCard(
-                              model: controller.fishesAnc[index],
-                            );
-                          },
-                        ),
-                )
+                loginController.isAdmin.value
+                    ? Obx(
+                        () => controller.isloadingFish.value
+                            ? const RefreshProgressIndicator()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(8.0),
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: controller.fishesAnc.length,
+                                itemBuilder: (context, index) {
+                                  return ProductCard2(
+                                    model: controller.fishesAnc[index],
+                                  );
+                                },
+                              ),
+                      )
+                    : Obx(
+                        () => controller.isloadingFish.value
+                            ? const RefreshProgressIndicator()
+                            : GridView.builder(
+                                shrinkWrap: true,
+                                padding: const EdgeInsets.all(8.0),
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 8.0,
+                                  mainAxisExtent: 280,
+                                  mainAxisSpacing: 8.0,
+                                ),
+                                itemCount: controller.fishesAnc.length,
+                                itemBuilder: (context, index) {
+                                  return ProductCard(
+                                    model: controller.fishesAnc[index],
+                                  );
+                                },
+                              ),
+                      )
               ],
             ),
           ),

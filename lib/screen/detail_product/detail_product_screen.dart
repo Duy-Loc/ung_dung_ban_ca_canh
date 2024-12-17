@@ -218,7 +218,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 height: 52,
                 width: double.infinity,
                 child: TextField(
-                  controller: _commentController,
+                  controller: _commentController, 
                   decoration: InputDecoration(
                     hintText: 'Nhập bình luận của bạn...',
                     border: OutlineInputBorder(

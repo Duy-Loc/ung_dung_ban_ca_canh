@@ -12,7 +12,7 @@ class DrawerInformationUser extends StatelessWidget {
     return isLogined
         ? DrawerHeader(
             decoration: const BoxDecoration(
-              color: Colors.redAccent,
+              color: Color.fromARGB(255, 112, 57, 57),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,26 +22,27 @@ class DrawerInformationUser extends StatelessWidget {
                 CircleAvatar(
                   radius: 30,
                   backgroundImage: const NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnQ0vTNLstwaCcggjf0QKaiYI87JmMM8QirA&s'), // Thay bằng URL ảnh đại diện thực tế
+                      'https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg'), // Thay bằng URL ảnh đại diện thực tế
                   backgroundColor: Colors.grey[300],
                 ),
                 const SizedBox(width: 16),
                 // Thông tin người dùng (Tên và username)
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Cao Trường Vũ', // Tên người đăng nhập (Thay thế bằng dữ liệu thực tế)
-                      style: TextStyle(
+                      "#${loginController.usernameAbc.value}", // Tên người đăng nhập (Thay thế bằng dữ liệu thực tế)
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '@VuNguyenCoder', // Tên người dùng (Username)
-                      style: TextStyle(
+                      loginController
+                          .emailUser.value, // Tên người dùng (Username)
+                      style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 14,
                       ),
@@ -53,13 +54,15 @@ class DrawerInformationUser extends StatelessWidget {
           )
         : const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Color.fromARGB(255, 112, 57, 57),
             ),
-            child: Text(
-              'Vui lòng đăng nhập',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+            child: Center(
+              child: Text(
+                'Vui lòng đăng nhập',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
           );
