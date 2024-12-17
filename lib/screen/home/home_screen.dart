@@ -92,14 +92,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.offNamed(Routes.root);
                 },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.login_rounded), // Biểu tượng đăng nhập
-              //   title: Text('Đăng xuất'),
-              //   onTap: () {
-              //       Get.toNamed(Routes.root);
-              //     // Thêm hành động khi nhấn vào, ví dụ điều hướng đến màn hình đăng nhập
-              //   },
-              // ),
             ],
           ),
         ),

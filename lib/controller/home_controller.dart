@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ung_dung_ban_ca_canh/model/category_model.dart';
 import 'package:ung_dung_ban_ca_canh/model/fish_product.dart';
 import 'package:ung_dung_ban_ca_canh/utils/core/app_service.dart';
 
@@ -9,6 +10,7 @@ class HomeController extends GetxController {
 
   decrement() => count--;
   RxList<FishModel> fishesAnc = <FishModel>[].obs;
+  RxList<CategoryModel> categoriesAnc  =  <CategoryModel>[].obs;
   RxBool isloadingFish = false.obs;
   FetchClient apiService = FetchClient();
 
@@ -23,6 +25,22 @@ class HomeController extends GetxController {
     final response = await apiService.getData(
       path: path,
     );
+    // http://54.255.204.181:5212/api/category 
+
+    final responseCategory = await apiService.getData(
+      path: '/category',
+    );
+
+    List<CategoryModel> categories = [] ;
+    if (responseCategory.statusCode! >= 200 && responseCategory.statusCode! <= 299) {
+      categories = List<CategoryModel>.from(responseCategory.data.map((x) => CategoryModel.fromJson(x)));
+    }
+    categoriesAnc.value = categories;
+
+
+    
+
+
     isloadingFish.value = false;
     List<FishModel> fishes = [];
     if (response.statusCode! >= 200 && response.statusCode! <= 299) {
@@ -35,6 +53,8 @@ class HomeController extends GetxController {
       fishesAnc.value = [...fishesAnc, ...fishes];
     }
   }
+
+
 
   handleCreateFishes({required}) async {}
 }

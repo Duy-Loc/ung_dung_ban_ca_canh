@@ -9,17 +9,20 @@ import '../utils/core/format_money.dart';
 class ProductCard extends StatelessWidget {
   final FishModel? model;
 
-  const ProductCard({super.key,  this.model});
+  const ProductCard({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
-String urlImage = 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg' ; 
-    if(model?.productImages?.isNotEmpty ?? false){
-      urlImage = model!.productImages!.isEmpty ? 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg' : FetchClient().domainNotApi + model!.productImages![0].imageUrl!;  
+    String urlImage =
+        'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg';
+    if (model?.productImages?.isNotEmpty ?? false) {
+      urlImage = model!.productImages!.isEmpty
+          ? 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/10/cac-loai-ca-canh-re-tien-ma-van-dep-hut-hon-dan-choi-ca-13380.jpg'
+          : FetchClient().domainNotApi + model!.productImages![0].imageUrl!;
     }
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetailPage());
+        Get.to(ProductDetailPage(model: model ?? FishModel(),));
       },
       child: Container(
         height: 280,
@@ -39,7 +42,8 @@ String urlImage = 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.network(
                 urlImage,
                 height: 165, // 2/3 chiều cao của 280
@@ -94,32 +98,35 @@ String urlImage = 'https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2018/
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    formatCurrency(model?.price ?? 1 * 1000), // Format giá tiền
+                    style: const TextStyle(
+                      color: Colors.green,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        formatCurrency(model?.price ?? 1 * 1000), // Format giá tiền
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        'Kho có sẵn: ${model?.stockQuantity ?? 0}',
+                        style: const TextStyle(fontSize: 12),
                       ),
                       GestureDetector(
                         onTap: () {},
-                        child:
-                            const Icon(Icons.shopping_cart, color: Colors.blue),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
                       )
-                    ],
-                  ),
-                 const  Row(
-                    children: [
-                      Text(
-                        '3 đánh giá',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(width: 4),
-                      Icon(Icons.star, color: Colors.amber, size: 16),
                     ],
                   ),
                 ],
