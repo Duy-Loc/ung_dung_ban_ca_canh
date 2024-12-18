@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ung_dung_ban_ca_canh/controller/create_product_controller.dart';
 import 'package:ung_dung_ban_ca_canh/controller/home_controller.dart';
 import 'package:ung_dung_ban_ca_canh/controller/register_controller.dart';
 
@@ -10,10 +11,12 @@ class SystemController extends GetxController {
   late HomeController homeController;
   late LoginController loginController;
   late RegisterController registerController;
+  late  CreateProductController createFishController;
 
   initControllerApp() {
     homeController = Get.put(HomeController());
     loginController = Get.put(LoginController());
     registerController = Get.put(RegisterController());
+    createFishController = Get.put(CreateProductController());
   }
 }

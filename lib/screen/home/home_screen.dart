@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ung_dung_ban_ca_canh/controller/home_controller.dart';
 import 'package:ung_dung_ban_ca_canh/controller/login_controller.dart';
+import 'package:ung_dung_ban_ca_canh/screen/category/category.dart';
 import 'package:ung_dung_ban_ca_canh/screen/home/filter_dialog.dart';
 
 import '../../model/product_card.dart';
@@ -145,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: const Text('Điều chỉnh danh mục'),
                       onTap: () {
                         Navigator.pop(context);
+                        Get.to(CategoryManagementScreen()) ; 
                       },
                     )
                   : const SizedBox(),

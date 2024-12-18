@@ -158,6 +158,20 @@ class FetchClient {
     }
   }
 
+  Future<Response> uploadProduct({required String url, required Map<String, dynamic> mapDataForm }) async { 
+    try{
+
+      FormData formData = FormData.fromMap(mapDataForm); 
+      final Response<dynamic> response = await dio.post(url, data: formData , options: options());
+      return response;
+    
+   }on DioException catch (e)
+   {
+       return e.response ??
+          Response(statusCode: -1, requestOptions: RequestOptions());
+   }
+   }
+
   Future<Response> postDataGraphql(
       {String? domainApp,
       required String path,
